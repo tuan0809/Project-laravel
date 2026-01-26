@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -15,30 +16,26 @@ require __DIR__.'/settings.php';
 
 
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('home');
 })->name('home');
-
+*/
+Route::get('/',[ProductController::class,"index"]);
 
 Route::prefix('product')->group(function () {
 
     // /product → product.index
-    Route::get('/', function () {
-        // dữ liệu mẫu fix cứng trên html
-        return view('product.index');
-    })->name('product.index');
+    Route::get('/', [ProductController::class, 'index'])
+        ->name('product.index');
 
     // /product/add → product.add
     Route::get('/add', function () {
         return view('product.add');
     })->name('product.add');
 
-    // /product/{id} → id kiểu chuỗi, mặc định 123
-    Route::get('/{id?}', function ($id = '123') {
-        return "Product ID: " . $id;
-    })
-    ->where('id', '[A-Za-z0-9]+')
-    ->name('product.detail');
+    Route::get('/{id}', [ProductController::class, 'detail'])
+        ->where('id', '[0-9]+')
+        ->name('product.detail');
 });
 
 
@@ -62,6 +59,19 @@ Route::get('/sinhvien/{name?}/{mssv?}', function (
 Route::get('/banco/{n}', function ($n) {
     return view('banco', compact('n'));
 })->name('banco');
+
+Route::get('/', [ProductController::class, 'index'])->name('product.index');
+
+Route::get('/login', [ProductController::class, 'login'])->name('login');
+Route::post('/login', [ProductController::class, 'handleLogin'])->name('login.post');
+
+Route::get('/register', [ProductController::class, 'register'])->name('register');
+Route::post('/register', [ProductController::class, 'handleRegister'])->name('register.post');
+
+
+Route::post('/product/add', [ProductController::class, 'store'])
+    ->name('product.store');
+
 
 Route::fallback(function () {
     return view('error.404');
