@@ -18,6 +18,10 @@ return Application::configure(basePath: dirname(__DIR__))
         
         // $middleware->append(CheckTimeAccess::class);
 
+        $middleware->alias([
+            'check.age' => \App\Http\Middleware\CheckAge::class,
+        ]);
+
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
         $middleware->web(append: [

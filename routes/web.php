@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\AgeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -67,6 +69,15 @@ Route::get('/', [ProductController::class, 'index'])->name('product.index');
 
 // Route::get('/register', [ProductController::class, 'register'])->name('register');
 // Route::post('/register', [ProductController::class, 'handleRegister'])->name('register.post');
+
+
+// View nhập tuổi
+Route::get('/nhaptuoi', [AgeController::class, 'showForm']);
+Route::post('/nhaptuoi', [AgeController::class, 'store'])->name('age.store');
+
+// Product bị chặn bởi middleware tuổi
+Route::get('/products', [ProductController::class, 'index'])
+    ->middleware('check.age');
 
 
 Route::get('/signin', [AuthController::class, 'SignIn'])
