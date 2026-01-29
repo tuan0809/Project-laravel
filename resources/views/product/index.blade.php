@@ -34,8 +34,8 @@
 </table>
 
 <hr>
-<a href="{{ route('login') }}">Login</a> |
-<a href="{{ route('register') }}">Register</a>
+<a href="{{ route('signin') }}">Login</a> |
+<!-- <a href="{{ route('register') }}">Register</a> -->
 
 </body>
 </html>

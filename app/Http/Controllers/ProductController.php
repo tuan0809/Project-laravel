@@ -31,17 +31,6 @@ class ProductController extends Controller
 
 
 
-    public function login()
-    {
-        return view('product.login');
-    }
-
-
-    public function register()
-    {
-        return view('product.register');
-    }
-
 
     public function store(Request $request)
     {
@@ -55,7 +44,6 @@ class ProductController extends Controller
         $product->name  = $request->name;
         $product->price = $request->price;
 
-        // 🔥 Upload ảnh vào public/images
         if ($request->hasFile('image')) {
             $imageName = time() . '_' . $request->image->getClientOriginalName();
             $request->image->move(public_path('images'), $imageName);
@@ -80,9 +68,9 @@ public function handleLogin(Request $request)
 
     $user = User::where('name', $request->name)->first();
 
-    if (!$user || !Hash::check($request->password, $user->password)) {
-        return back()->with('error', 'Tên hoặc mật khẩu sai');
-    }
+    // if (!$user || !Hash::check($request->password, $user->password)) {
+    //     return back()->with('error', 'Tên hoặc mật khẩu sai');
+    // }
 
     return back()->with('success', 'Đăng nhập thành công!');
 }

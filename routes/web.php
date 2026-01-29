@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -62,12 +62,17 @@ Route::get('/banco/{n}', function ($n) {
 
 Route::get('/', [ProductController::class, 'index'])->name('product.index');
 
-Route::get('/login', [ProductController::class, 'login'])->name('login');
-Route::post('/login', [ProductController::class, 'handleLogin'])->name('login.post');
+// Route::get('/login', [ProductController::class, 'login'])->name('login');
+// Route::post('/login', [ProductController::class, 'handleLogin'])->name('login.post');
 
-Route::get('/register', [ProductController::class, 'register'])->name('register');
-Route::post('/register', [ProductController::class, 'handleRegister'])->name('register.post');
+// Route::get('/register', [ProductController::class, 'register'])->name('register');
+// Route::post('/register', [ProductController::class, 'handleRegister'])->name('register.post');
 
+
+Route::get('/signin', [AuthController::class, 'SignIn'])
+    ->name('signin');
+
+Route::post('/signin', [AuthController::class, 'CheckSignIn']);
 
 Route::post('/product/add', [ProductController::class, 'store'])
     ->name('product.store');
